@@ -8,7 +8,7 @@ namespace NetworkInventory.WebApp.Models
         public InventoryContext(DbContextOptions<InventoryContext> options) : base(options) { }
         
 
-        public DbSet<Devices> Devices { get; set; }
+        public DbSet<Device> Devices { get; set; }
         public DbSet<Cable> Cables { get; set; }
         
         

@@ -1,7 +1,7 @@
 ﻿using System;
 namespace NetworkInventory.WebApp.Models
 {
-    public class Devices
+    public class Device
     {
         public int Id { get; set; }
         public string Name { get; set; }   // e.g., Cisco Switch, Router

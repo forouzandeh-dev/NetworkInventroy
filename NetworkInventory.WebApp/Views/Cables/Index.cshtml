@@ -1,4 +1,4 @@
-﻿@model IEnumerable<NetworkInventory.WebApp.Models.Device>
+﻿@model IEnumerable<NetworkInventory.WebApp.Models.Cable>
 
 @{
     ViewData["Title"] = "Index";
@@ -13,13 +13,13 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Name)
+                @Html.DisplayNameFor(model => model.Type)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.type)
+                @Html.DisplayNameFor(model => model.Length)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.location)
+                @Html.DisplayNameFor(model => model.Location)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.InstallationDate)
@@ -31,13 +31,13 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Name)
+                @Html.DisplayFor(modelItem => item.Type)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.type)
+                @Html.DisplayFor(modelItem => item.Length)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.location)
+                @Html.DisplayFor(modelItem => item.Location)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.InstallationDate)

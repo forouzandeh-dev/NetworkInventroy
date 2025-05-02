@@ -25,6 +25,12 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Devices" asp-action="Index">Devices</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Cables" asp-action="Index">Cables</a>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -45,5 +51,10 @@
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
+
+    <footer class="text-center mt-5 mb-3">
+        <p>© 2025 - Designed by Hassan Forouzandeh</p>
+    </footer>
+
 </body>
 </html>
