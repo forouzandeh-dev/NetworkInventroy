@@ -19,9 +19,19 @@ namespace NetworkInventory.WebApp.Controllers
         }
 
         // GET: Devices
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchString)
         {
-            return View(await _context.Devices.ToListAsync());
+
+            ViewData["CurrentFilter"]=searchString;
+            var devices= from d in _context.Devices
+                         select d;
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                devices = devices.Where(d=> d.Name.Contains(searchString)||
+                d.type.Contains(searchString)||
+                d.location.Contains(searchString));
+            }
+            return View(await devices.ToListAsync());
         }
 
         // GET: Devices/Details/5
