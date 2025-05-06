@@ -19,9 +19,18 @@ namespace NetworkInventory.WebApp.Controllers
         }
 
         // GET: Cables
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchString)
         {
-            return View(await _context.Cables.ToListAsync());
+            ViewData["CurrentFilter"] = searchString;
+            var cables = from d in _context.Cables
+                         select d;
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                cables = cables.Where(d => d.Type.Contains(searchString) ||
+                d.Length.Contains(searchString) ||
+                d.Location.Contains(searchString));
+            }
+            return View(await cables.ToListAsync());
         }
 
         // GET: Cables/Details/5
