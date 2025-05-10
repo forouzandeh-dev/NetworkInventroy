@@ -6,12 +6,10 @@ namespace NetworkInventory.WebApp.Models
     {
         public int Id { get; set; }
 
-        [Required]
-        public string Name { get; set; }   // e.g., Cisco Switch, Router
+        [Display(Name ="Device Category")]
+        public int DeviceCategoryId { get; set; }
 
-        [Required]
-        public string type { get; set; }   // e.g., Switch, Router, Access Point
-
+        public DeviceCategory DeviceCategory { get; set; }
 
         public string location { get; set; }   // e.g., Data Center, Office 1
 

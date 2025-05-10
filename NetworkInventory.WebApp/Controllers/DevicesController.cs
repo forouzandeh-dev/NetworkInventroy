@@ -19,7 +19,7 @@ namespace NetworkInventory.WebApp.Controllers
         }
 
         // GET: Devices
-        public async Task<IActionResult> Index(string searchString)
+        public async Task<IActionResult> Index(string searchString, string type)
         {
 
             ViewData["CurrentFilter"]=searchString;
@@ -31,6 +31,12 @@ namespace NetworkInventory.WebApp.Controllers
                 d.type.Contains(searchString)||
                 d.location.Contains(searchString));
             }
+            if (!string.IsNullOrEmpty(type))
+            { 
+                devices=devices.Where(d=> d.type==type);
+            
+            }
+            ViewData["CurrentFilter"] = searchString;
             return View(await devices.ToListAsync());
         }
 

@@ -29,8 +29,19 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Devices" asp-action="Index">Devices</a>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-dark" href="#" id="devicesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Devices
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="devicesDropdown">
+                                <li><a class="dropdown-item" asp-controller="Devices" asp-action="Index">All</a></li>
+                                <li><a class="dropdown-item " asp-controller="Devices" asp-action="Index" asp-route-type="Switch">Switch</a></li>
+                                <li><a class="dropdown-item" asp-controller="Devices" asp-action="Index" asp-route-type="Router">Routers</a></li>
+                                <li><a class="dropdown-item" asp-controller="Devices" asp-action="Index" asp-route-type="Media-convertor">Media-convertors</a></li>
+                                <li><a class="dropdown-item" asp-controller="Devices" asp-action="Index" asp-route-type="Firewall">Firewalls</a></li>
+                            </ul>
+
+                            
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Cables" asp-action="Index">Cables</a>

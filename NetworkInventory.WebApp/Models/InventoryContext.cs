@@ -10,6 +10,7 @@ namespace NetworkInventory.WebApp.Models
 
         public DbSet<Device> Devices { get; set; }
         public DbSet<Cable> Cables { get; set; }
+        public DbSet<DeviceCategory> DeviceCategories { get; set; }
         
         
     }
