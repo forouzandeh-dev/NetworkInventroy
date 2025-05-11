@@ -31,7 +31,7 @@
                 @Html.DisplayNameFor(model => model.Name)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.type)
+                @Html.DisplayNameFor(model => model.DeviceCategoryId)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.location)
@@ -54,7 +54,7 @@
                     @Html.DisplayFor(modelItem => item.Name)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.type)
+                    @item.DeviceCategory?.Name 
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.location)

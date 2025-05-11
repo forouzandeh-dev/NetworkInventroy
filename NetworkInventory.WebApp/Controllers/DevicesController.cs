@@ -23,17 +23,16 @@ namespace NetworkInventory.WebApp.Controllers
         {
 
             ViewData["CurrentFilter"]=searchString;
-            var devices= from d in _context.Devices
-                         select d;
+            var devices = _context.Devices.Include(d => d.DeviceCategory).AsQueryable();
             if (!String.IsNullOrEmpty(searchString))
             {
                 devices = devices.Where(d=> d.Name.Contains(searchString)||
-                d.type.Contains(searchString)||
+                d.DeviceCategory.Name.Contains(searchString)||
                 d.location.Contains(searchString));
             }
             if (!string.IsNullOrEmpty(type))
             { 
-                devices=devices.Where(d=> d.type==type);
+                devices=devices.Where(d=> d.DeviceCategory.Name==type);
             
             }
             ViewData["CurrentFilter"] = searchString;
@@ -61,6 +60,7 @@ namespace NetworkInventory.WebApp.Controllers
         // GET: Devices/Create
         public IActionResult Create()
         {
+            ViewBag.DeviceCategoryId = new SelectList(_context.DeviceCategories, "Id", "Name");
             return View();
         }
 
@@ -85,6 +85,7 @@ namespace NetworkInventory.WebApp.Controllers
         {
             if (id == null)
             {
+                ViewBag.DeviceCategoryId=new SelectList(_context.DeviceCategories,"Id", "Name");
                 return NotFound();
             }
 
