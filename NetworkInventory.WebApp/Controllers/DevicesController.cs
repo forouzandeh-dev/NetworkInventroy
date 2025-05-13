@@ -21,6 +21,7 @@ namespace NetworkInventory.WebApp.Controllers
         // GET: Devices
         public async Task<IActionResult> Index(string searchString, string type)
         {
+            ViewBag.DeviceCategories = await _context.DeviceCategories.ToListAsync();
 
             ViewData["CurrentFilter"]=searchString;
             var devices = _context.Devices.Include(d => d.DeviceCategory).AsQueryable();
@@ -42,6 +43,8 @@ namespace NetworkInventory.WebApp.Controllers
         // GET: Devices/Details/5
         public async Task<IActionResult> Details(int? id)
         {
+            ViewBag.DeviceCategories = await _context.DeviceCategories.ToListAsync();
+
             if (id == null)
             {
                 return NotFound();
@@ -60,6 +63,7 @@ namespace NetworkInventory.WebApp.Controllers
         // GET: Devices/Create
         public IActionResult Create()
         {
+
             ViewBag.DeviceCategoryId = new SelectList(_context.DeviceCategories, "Id", "Name");
             return View();
         }
@@ -71,6 +75,8 @@ namespace NetworkInventory.WebApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Name,type,location,InstallationDate")] Device devices)
         {
+            ViewBag.DeviceCategories = await _context.DeviceCategories.ToListAsync();
+
             if (ModelState.IsValid)
             {
                 _context.Add(devices);
@@ -83,6 +89,8 @@ namespace NetworkInventory.WebApp.Controllers
         // GET: Devices/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
+            ViewBag.DeviceCategories = await _context.DeviceCategories.ToListAsync();
+
             if (id == null)
             {
                 ViewBag.DeviceCategoryId=new SelectList(_context.DeviceCategories,"Id", "Name");
@@ -135,6 +143,8 @@ namespace NetworkInventory.WebApp.Controllers
         // GET: Devices/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
+            ViewBag.DeviceCategories = await _context.DeviceCategories.ToListAsync();
+
             if (id == null)
             {
                 return NotFound();

@@ -7,10 +7,12 @@ namespace NetworkInventory.WebApp.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly ApplicationDbContext _context;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger,NetworkInventoryDbContext context)
         {
             _logger = logger;
+            _context = Context;
         }
 
         public IActionResult Index()
