@@ -33,7 +33,7 @@ namespace NetworkInventory.WebApp.Controllers
             }
             if (!string.IsNullOrEmpty(type))
             { 
-                devices=devices.Where(d=> d.DeviceCategory.Name==type);
+                devices=devices.Where(d=> d.DeviceCategory.Name!= null && d.DeviceCategory.Name.ToLower()== type.ToLower());
             
             }
             ViewData["CurrentFilter"] = searchString;

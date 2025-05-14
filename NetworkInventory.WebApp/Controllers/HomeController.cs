@@ -7,16 +7,17 @@ namespace NetworkInventory.WebApp.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly ApplicationDbContext _context;
+        private readonly InventoryContext _context;
 
-        public HomeController(ILogger<HomeController> logger,NetworkInventoryDbContext context)
+        public HomeController(ILogger<HomeController> logger,InventoryContext context)
         {
             _logger = logger;
-            _context = Context;
+            _context = context;
         }
 
         public IActionResult Index()
         {
+            ViewBag.DeviceCategories=_context.DeviceCategories.ToList();
             return View();
         }
 

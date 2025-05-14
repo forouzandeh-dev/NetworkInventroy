@@ -37,15 +37,20 @@
                                 var categories = ViewBag.DeviceCategories as List<NetworkInventory.WebApp.Models.DeviceCategory>;
 
                             }
-                            <ul class="dropdown-menu" aria-labelledby="devicesDropdown">
-                                <li><a class="dropdown-item" asp-controller="Devices" asp-action="Index">All</a></li>
-                                @foreach (var category in categories)
-                                {
-                                    <li>
-                                        <a class="dropdown-item" asp-controller="Devices" asp-action="Index" asp-route-type="@category.Name">@category.Name</a>
-                                    </li>
-                                }
-                            </ul>
+                            @if (categories != null)
+                            {
+                                <ul class="dropdown-menu" aria-labelledby="devicesDropdown">
+                                    <li><a class="dropdown-item" asp-controller="Devices" asp-action="Index">All</a></li>
+                                    @foreach (var category in categories)
+                                    {
+                                        <li>
+                                            <a class="dropdown-item" asp-controller="Devices" asp-action="Index" asp-route-type="@category.Name">@category.Name</a>
+                                        </li>
+                                    }
+                                </ul>
+                                
+                            }
+                            
                         </li>
 
 
