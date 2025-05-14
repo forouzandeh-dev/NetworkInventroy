@@ -73,16 +73,17 @@ namespace NetworkInventory.WebApp.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,type,location,InstallationDate")] Device devices)
+        public async Task<IActionResult> Create([Bind("Id,Name,DeviceCategoryId,location,InstallationDate")] Device devices)
         {
-            ViewBag.DeviceCategories = await _context.DeviceCategories.ToListAsync();
 
+            Console.WriteLine(ModelState.IsValid);
             if (ModelState.IsValid)
             {
                 _context.Add(devices);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewBag.DeviceCategoryId= new SelectList(_context.DeviceCategories, "Id", "Name",devices.DeviceCategoryId);
             return View(devices);
         }
 
