@@ -8,7 +8,7 @@ namespace NetworkInventory.WebApp.Models
     {
         public int Id { get; set; }
         [Required]
-        public string Name { get; set; }
+        public string? Name { get; set; }
         
         [Display(Name = "Device Category")]
         [Required]

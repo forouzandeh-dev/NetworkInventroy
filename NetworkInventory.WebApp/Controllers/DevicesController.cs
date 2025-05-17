@@ -27,13 +27,13 @@ namespace NetworkInventory.WebApp.Controllers
             var devices = _context.Devices.Include(d => d.DeviceCategory).AsQueryable();
             if (!String.IsNullOrEmpty(searchString))
             {
-                devices = devices.Where(d=> d.Name.Contains(searchString)||
-                d.DeviceCategory.Name.Contains(searchString)||
+                devices = devices.Where(d=>d.Name!=null&& d.Name.Contains(searchString)||
+                d.DeviceCategory!=null&&d.DeviceCategory.Name.Contains(searchString)||
                 d.location.Contains(searchString));
             }
             if (!string.IsNullOrEmpty(type))
             { 
-                devices=devices.Where(d=> d.DeviceCategory.Name!= null && d.DeviceCategory.Name.ToLower()== type.ToLower());
+                devices = devices.Where(d=> d.DeviceCategory!= null && d.DeviceCategory.Name!=null&& d.DeviceCategory.Name.ToLower()== type.ToLower());
             
             }
             ViewData["CurrentFilter"] = searchString;
@@ -90,11 +90,11 @@ namespace NetworkInventory.WebApp.Controllers
         // GET: Devices/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            ViewBag.DeviceCategories = await _context.DeviceCategories.ToListAsync();
+            
 
             if (id == null)
             {
-                ViewBag.DeviceCategoryId=new SelectList(_context.DeviceCategories,"Id", "Name");
+                
                 return NotFound();
             }
 
@@ -103,6 +103,7 @@ namespace NetworkInventory.WebApp.Controllers
             {
                 return NotFound();
             }
+            ViewBag.DeviceCategoryId = new SelectList(_context.DeviceCategories, "Id", "Name", devices.DeviceCategoryId);
             return View(devices);
         }
 
@@ -111,7 +112,7 @@ namespace NetworkInventory.WebApp.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,type,location,InstallationDate")] Device devices)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,DeviceCategoryId,location,InstallationDate")] Device devices)
         {
             if (id != devices.Id)
             {
@@ -138,6 +139,7 @@ namespace NetworkInventory.WebApp.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewBag.DeviceCategoryId = new SelectList(_context.DeviceCategories, "Id", "Name", devices.DeviceCategoryId);
             return View(devices);
         }
 
