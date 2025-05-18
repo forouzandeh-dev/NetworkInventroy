@@ -6,21 +6,31 @@
 
 <h1>Create</h1>
 
-<h4>Cable</h4>
+<h4>Items</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Type" class="control-label"></label>
-                <input asp-for="Type" class="form-control" />
-                <span asp-validation-for="Type" class="text-danger"></span>
+                <label asp-for="ItemType" class="control-label"></label>
+               <select asp-for="ItemType" class="form-control" id="ItemType" onchange="onItemTypeChange()">
+                   <option value="">--Select Type</option>
+                   <option value="Cable">Cable</option>
+                   <option value="Kestone">Keystone</option>
+                   <option value="Faceplate">Faceplate</option>
+               </select>
+                <span asp-validation-for="ItemType" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group type-field" data-type="Cable">
                 <label asp-for="Length" class="control-label"></label>
                 <input asp-for="Length" class="form-control" />
                 <span asp-validation-for="Length" class="text-danger"></span>
+            </div>
+            <div class="form-group type-field" data-type="Keystone">
+                <label asp-for="KeystoneCategory" class="control-label"> </label>
+                <input asp-for="KeystoneCategory" class="form-control"/>
+                <span asp-validation-for="KeystoneCategory" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Location" class="control-label"></label>
@@ -45,4 +55,14 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script>
+        function onItemTypeChange(){
+            const selectedType = document.getElementById("ItemType").Value;
+            document.querySelectorAll('.type-field').forEach(HTMLFieldSetElement => {
+                field.style.display=field.getAttribute('data-type')== selectedType ? 'block': 'none';
+            });
+        }
+        document.addEventListener("DOMContentLoaded",onItemTypeChange);
+    </script>
 }

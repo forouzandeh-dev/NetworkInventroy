@@ -19,18 +19,28 @@ namespace NetworkInventory.WebApp.Controllers
         }
 
         // GET: ConnectivityItems
-        public async Task<IActionResult> Index(string searchString)
+        public async Task<IActionResult> Index(string searchString,string itemType)
         {
             ViewData["CurrentFilter"] = searchString;
-            var cables = from d in _context.ConnectivityItems
-                         select d;
-            if (!string.IsNullOrEmpty(searchString))
+            ViewData["CurrentItemType"] = itemType;
+            var items = from i in _context.ConnectivityItems
+                        select i;
+            if (!string.IsNullOrEmpty(itemType))
             {
-                cables = cables.Where(d => d.Type.Contains(searchString) ||
-                d.Length.Contains(searchString) ||
-                d.Location.Contains(searchString));
+                items = items.Where(i => i.ItemType==itemType);
+                
             }
-            return View(await cables.ToListAsync());
+            if (!string.IsNullOrEmpty(searchString))
+            { 
+                items=items.Where(i =>
+                    i.ItemType.Contains(searchString)||
+                    (i.Length.HasValue&& i.Length.Value.ToString().Contains(searchString))||
+                    i.Location.Contains(searchString)
+                    );
+            
+            
+            }
+            return View(await items.ToListAsync());
         }
 
         // GET: ConnectivityItems/Details/5
