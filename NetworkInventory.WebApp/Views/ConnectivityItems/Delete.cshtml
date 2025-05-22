@@ -8,20 +8,44 @@
 
 <h3>Are you sure you want to delete this?</h3>
 <div>
-    <h4>Item</h4>
+    <h4>ConnectivityItem</h4>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Type)
+            @Html.DisplayNameFor(model => model.Name)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Type)
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.ItemType)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.ItemType)
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Length)
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Length)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.CableType)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.CableType)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.KeystoneCategory)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.KeystoneCategory)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.PortCount)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.PortCount)
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Location)

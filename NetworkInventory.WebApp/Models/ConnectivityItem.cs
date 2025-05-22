@@ -8,10 +8,10 @@ namespace NetworkInventory.WebApp.Models
         public int Id { get; set; }
 
         public string? Name { get; set; }
-        [Required]
+       
         //Common field
         public string? ItemType { get; set; }  //e.g, "Cable, "KeyStone", "Faceplate"
-        [Required]
+       
 
         //Cable-specific
         public double? Length { get; set; }
@@ -24,6 +24,14 @@ namespace NetworkInventory.WebApp.Models
 
         // Faceplate-specific
         public int? PortCount { get; set; }
+
+        public string? FiberMode {  get; set; } // e.g, single-mode, multi-mode
+        public string? ConnectorType { get; set; } // e.g., LC, SC, ST
+
+
+        public string? SfpType  { get; set; }// e.g., 1G-SX, 10G-LR
+        public int? TransmissionDistance { get; set; }// in meters
+
 
         public string? Location { get; set; }
         [Display(Name = "Instalation Date")]

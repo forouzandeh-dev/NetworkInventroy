@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -19,28 +20,9 @@ namespace NetworkInventory.WebApp.Controllers
         }
 
         // GET: ConnectivityItems
-        public async Task<IActionResult> Index(string searchString,string itemType)
+        public async Task<IActionResult> Index()
         {
-            ViewData["CurrentFilter"] = searchString;
-            ViewData["CurrentItemType"] = itemType;
-            var items = from i in _context.ConnectivityItems
-                        select i;
-            if (!string.IsNullOrEmpty(itemType))
-            {
-                items = items.Where(i => i.ItemType==itemType);
-                
-            }
-            if (!string.IsNullOrEmpty(searchString))
-            { 
-                items=items.Where(i =>
-                    i.ItemType.Contains(searchString)||
-                    (i.Length.HasValue&& i.Length.Value.ToString().Contains(searchString))||
-                    i.Location.Contains(searchString)
-                    );
-            
-            
-            }
-            return View(await items.ToListAsync());
+            return View(await _context.ConnectivityItems.ToListAsync());
         }
 
         // GET: ConnectivityItems/Details/5
@@ -51,36 +33,37 @@ namespace NetworkInventory.WebApp.Controllers
                 return NotFound();
             }
 
-            var cable = await _context.ConnectivityItems
+            var connectivityItem = await _context.ConnectivityItems
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (cable == null)
+            if (connectivityItem == null)
             {
                 return NotFound();
             }
 
-            return View(cable);
+            return View(connectivityItem);
         }
 
-        // GET: Cables/Create
+        // GET: ConnectivityItems/Create
         public IActionResult Create()
         {
+            ViewBag.ItemTypes= new List<string> { "Cable","Keystone","Faceplate", "Fiber", "SFP"};
             return View();
         }
 
-        // POST: Cables/Create
+        // POST: ConnectivityItems/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Type,Length,Location,InstallationDate")] ConnectivityItem cable)
+        public async Task<IActionResult> Create([Bind("Id,Name,ItemType,Length,CableType,KeystoneCategory,PortCount,Location,InstallationDate")] ConnectivityItem connectivityItem)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(cable);
+                _context.Add(connectivityItem);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(cable);
+            return View(connectivityItem);
         }
 
         // GET: ConnectivityItems/Edit/5
@@ -91,12 +74,13 @@ namespace NetworkInventory.WebApp.Controllers
                 return NotFound();
             }
 
-            var cable = await _context.ConnectivityItems.FindAsync(id);
-            if (cable == null)
+            var connectivityItem = await _context.ConnectivityItems.FindAsync(id);
+            if (connectivityItem == null)
             {
                 return NotFound();
             }
-            return View(cable);
+            ViewBag.ItemTypes= new List<string> { "Cable", "Keystone", "Faceplate", "Fiber", "SFP" };
+            return View(connectivityItem);
         }
 
         // POST: ConnectivityItems/Edit/5
@@ -104,9 +88,9 @@ namespace NetworkInventory.WebApp.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Type,Length,Location,InstallationDate")] ConnectivityItem cable)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,ItemType,Length,CableType,KeystoneCategory,PortCount,Location,InstallationDate")] ConnectivityItem connectivityItem)
         {
-            if (id != cable.Id)
+            if (id != connectivityItem.Id)
             {
                 return NotFound();
             }
@@ -115,12 +99,12 @@ namespace NetworkInventory.WebApp.Controllers
             {
                 try
                 {
-                    _context.Update(cable);
+                    _context.Update(connectivityItem);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!CableExists(cable.Id))
+                    if (!ConnectivityItemExists(connectivityItem.Id))
                     {
                         return NotFound();
                     }
@@ -131,7 +115,7 @@ namespace NetworkInventory.WebApp.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(cable);
+            return View(connectivityItem);
         }
 
         // GET: ConnectivityItems/Delete/5
@@ -142,32 +126,32 @@ namespace NetworkInventory.WebApp.Controllers
                 return NotFound();
             }
 
-            var cable = await _context.ConnectivityItems
+            var connectivityItem = await _context.ConnectivityItems
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (cable == null)
+            if (connectivityItem == null)
             {
                 return NotFound();
             }
 
-            return View(cable);
+            return View(connectivityItem);
         }
 
-        // POST: Cables/Delete/5
+        // POST: ConnectivityItems/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var cable = await _context.ConnectivityItems.FindAsync(id);
-            if (cable != null)
+            var connectivityItem = await _context.ConnectivityItems.FindAsync(id);
+            if (connectivityItem != null)
             {
-                _context.ConnectivityItems.Remove(cable);
+                _context.ConnectivityItems.Remove(connectivityItem);
             }
 
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool CableExists(int id)
+        private bool ConnectivityItemExists(int id)
         {
             return _context.ConnectivityItems.Any(e => e.Id == id);
         }

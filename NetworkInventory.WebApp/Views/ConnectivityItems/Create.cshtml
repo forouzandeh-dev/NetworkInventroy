@@ -6,31 +6,47 @@
 
 <h1>Create</h1>
 
-<h4>Items</h4>
+<h4>ConnectivityItem</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <label asp-for="ItemType" class="control-label"></label>
-               <select asp-for="ItemType" class="form-control" id="ItemType" onchange="onItemTypeChange()">
-                   <option value="">--Select Type</option>
-                   <option value="Cable">Cable</option>
-                   <option value="Kestone">Keystone</option>
-                   <option value="Faceplate">Faceplate</option>
-               </select>
+                <select asp-for="ItemType" class="form-control" id="itemType">
+                    <option value="">Select Item Type</option>
+                    @foreach (var type in ViewBag.ItemTypes)
+                    {
+                        <option value="@type">@type</option>
+                    }
+                </select>
                 <span asp-validation-for="ItemType" class="text-danger"></span>
             </div>
-            <div class="form-group type-field" data-type="Cable">
+            <div class="form-group">
                 <label asp-for="Length" class="control-label"></label>
                 <input asp-for="Length" class="form-control" />
                 <span asp-validation-for="Length" class="text-danger"></span>
             </div>
-            <div class="form-group type-field" data-type="Keystone">
-                <label asp-for="KeystoneCategory" class="control-label"> </label>
-                <input asp-for="KeystoneCategory" class="form-control"/>
+            <div class="form-group">
+                <label asp-for="CableType" class="control-label"></label>
+                <input asp-for="CableType" class="form-control" />
+                <span asp-validation-for="CableType" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="KeystoneCategory" class="control-label"></label>
+                <input asp-for="KeystoneCategory" class="form-control" />
                 <span asp-validation-for="KeystoneCategory" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PortCount" class="control-label"></label>
+                <input asp-for="PortCount" class="form-control" />
+                <span asp-validation-for="PortCount" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Location" class="control-label"></label>
@@ -55,14 +71,4 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-
-    <script>
-        function onItemTypeChange(){
-            const selectedType = document.getElementById("ItemType").Value;
-            document.querySelectorAll('.type-field').forEach(HTMLFieldSetElement => {
-                field.style.display=field.getAttribute('data-type')== selectedType ? 'block': 'none';
-            });
-        }
-        document.addEventListener("DOMContentLoaded",onItemTypeChange);
-    </script>
 }
