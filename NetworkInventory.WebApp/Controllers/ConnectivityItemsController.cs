@@ -20,8 +20,21 @@ namespace NetworkInventory.WebApp.Controllers
         }
 
         // GET: ConnectivityItems
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string itemtype, string searchString)
         {
+            ViewBag.ConnectivityItemTypes = await _context.ConnectivityItems
+                .Select(ci => ci.ItemType)
+                .Distinct()
+                .ToListAsync();
+            var items = _context.ConnectivityItems.AsQueryable();
+            if (!string.IsNullOrEmpty(itemtype))
+            {
+                items= items.Where(ci => ci.ItemType == itemtype);
+            }
+            if (!string.IsNullOrEmpty(searchString)) 
+            {
+                items=items.Where(ci => ci.Name.Contains(searchString));
+            }
             return View(await _context.ConnectivityItems.ToListAsync());
         }
 

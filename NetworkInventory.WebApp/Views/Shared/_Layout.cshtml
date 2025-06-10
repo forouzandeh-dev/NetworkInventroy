@@ -56,8 +56,26 @@
                         </li>
 
 
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="ConnectivityItems" asp-action="Index">Connectivity Items</a>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-dark" href="#" id="connectivityDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Connetivity Items
+                            </a>
+                            @{
+                                var itemTypes = ViewBag.ConnectivityItemTypes as List<string>;
+                            }
+                            @if (itemTypes != null)
+                            {
+                                <ul class="dropdown-menu" aria-labelledby="connectivityDropdown">
+                                    <li><a class="dropdown-item" asp-controller="ConectivityItems" asp-action="Index">All</a></li>
+
+                                    @foreach (var type in itemTypes)
+                                    {
+                                        <li>
+                                            <a class="dropdown-item" asp-controller="ConnectivityItems" asp-action="Index" asp-route-itemType="@type">@type</a>
+                                        </li>
+                                    }
+                                </ul>
+                            }
                         </li>
                     </ul>
                 </div>

@@ -18,6 +18,11 @@ namespace NetworkInventory.WebApp.Controllers
         public IActionResult Index()
         {
             ViewBag.DeviceCategories=_context.DeviceCategories.ToList();
+            ViewBag.ConnectivityItemTypes=_context.ConnectivityItems
+                .Select(ci => ci.ItemType)
+                .Distinct()
+                .ToList();
+            
             return View();
         }
 
