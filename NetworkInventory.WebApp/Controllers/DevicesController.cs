@@ -22,6 +22,10 @@ namespace NetworkInventory.WebApp.Controllers
         public async Task<IActionResult> Index(string searchString, string type)
         {
             ViewBag.DeviceCategories = await _context.DeviceCategories.ToListAsync();
+            ViewBag.ConnectivityItemTypes = await _context.ConnectivityItems
+               .Select(ci => ci.ItemType)
+               .Distinct()
+               .ToListAsync();
 
             ViewData["CurrentFilter"]=searchString;
             var devices = _context.Devices.Include(d => d.DeviceCategory).AsQueryable();

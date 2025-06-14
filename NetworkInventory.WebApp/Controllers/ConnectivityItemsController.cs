@@ -22,6 +22,7 @@ namespace NetworkInventory.WebApp.Controllers
         // GET: ConnectivityItems
         public async Task<IActionResult> Index(string itemtype, string searchString)
         {
+            ViewBag.DeviceCategories = _context.DeviceCategories.ToList();
             ViewBag.ConnectivityItemTypes = await _context.ConnectivityItems
                 .Select(ci => ci.ItemType)
                 .Distinct()
@@ -35,7 +36,7 @@ namespace NetworkInventory.WebApp.Controllers
             {
                 items = items.Where(ci => ci.Name.Contains(searchString));
             }
-            return View(await _context.ConnectivityItems.ToListAsync());
+            return View(await items.ToListAsync());
         }
 
         // GET: ConnectivityItems/Details/5
@@ -59,6 +60,7 @@ namespace NetworkInventory.WebApp.Controllers
         // GET: ConnectivityItems/Create
         public IActionResult Create()
         {
+
             ViewBag.ItemTypes= new List<string> { "Cable","Keystone","Faceplate", "Fiber", "SFP"};
             return View();
         }
@@ -68,7 +70,7 @@ namespace NetworkInventory.WebApp.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,ItemType,Length,CableType,KeystoneCategory,PortCount,Location,InstallationDate")] ConnectivityItem connectivityItem)
+        public async Task<IActionResult> Create([Bind("Id,Name,ItemType,Length,CableType,KeystoneCategory,PortCount,SfpType,TransmissionDistanc,Location,InstallationDate")] ConnectivityItem connectivityItem)
         {
             if (ModelState.IsValid)
             {
@@ -102,7 +104,7 @@ namespace NetworkInventory.WebApp.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,ItemType,Length,CableType,KeystoneCategory,PortCount,Location,InstallationDate")] ConnectivityItem connectivityItem)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,ItemType,Length,CableType,KeystoneCategory,PortCount,SfpType,TransmissionDistanc,Location,InstallationDate")] ConnectivityItem connectivityItem)
         {
             if (id != connectivityItem.Id)
             {

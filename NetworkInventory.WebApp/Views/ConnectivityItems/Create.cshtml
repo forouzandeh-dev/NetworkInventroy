@@ -73,7 +73,7 @@
             <div id="fibermodeFields" style="display:none;">
                 <div class="form-group">
                     <label asp-for="FiberMode" class="control-label"></label>
-                    <input ask-for="FiberMode" class="form-control"/>
+                    <input asp-for="FiberMode" class="form-control"/>
                     <span asp-validation-for="FiberMode" class="text-danger"></span>
                 </div>
                 <div class="form-group">
@@ -88,14 +88,14 @@
             <div id="sfptypeFields" style="display:none;">
                 <div class="form-group">
                     <label asp-for="SfpType" class="control-label"></label>
-                    <input ask-for="SfpType" class="form-control"/>
+                    <input asp-for="SfpType" class="form-control"/>
                     <span asp-validation-for="SfpType" class="text-d"></span>
 
                     
                 </div>
                 <div class="form-group">
                     <label asp-for="TransmissionDistance" class="control-label"></label>
-                    <input ask-for="TransmissionDistance" class="form-control" />
+                    <input asp-for="TransmissionDistance" class="form-control" />
                     <span asp-validation-for="TransmissionDistance" class="text-danger"></span>
                 </div>
 
@@ -134,7 +134,7 @@
                 document.getElementById("keystoneFields").style.display="none";
                 document.getElementById("faceplateFields").style.display="none";
                 document.getElementById("fibermodeFields").style.display="none";
-            document.getElementById("sfptypeFields").style.display="none";
+                document.getElementById("sfptypeFields").style.display="none";
 
                 //Show based on selection
 
